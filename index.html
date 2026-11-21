@@ -15,7 +15,7 @@
       <a class="brand" href="#top" aria-label="Eyebrows by Elena home">
         <img class="brand-logo" src="assets/elena-logo.png" alt="Eyebrows by Elena" />
       </a>
-      <nav aria-label="Main navigation">
+      <nav id="main-navigation" aria-label="Main navigation">
         <a href="#services">Services</a>
         <a href="#gallery">Gallery</a>
         <a href="#recognition">Recognition</a>
@@ -26,6 +26,11 @@
         <span>Call to book</span>
         <strong>781 862 1007</strong>
       </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </header>
 
     <main id="top">
@@ -196,7 +201,6 @@
           <p class="eyebrow">Meet Elena</p>
           <blockquote>“A perfect brow should bring balance to the face and celebrate natural asymmetry.”</blockquote>
           <p>Elena Vyunskovskaya brings an artistic eye and an esthetician’s precision to every appointment. Each brow is thoughtfully sculpted around your unique facial features, hair line, and skin tone.</p>
-          <a class="text-link" href="mailto:appointment@eyebrowsbyelena.com">Ask Elena a question <span aria-hidden="true">↗</span></a>
         </div>
       </section>
 
@@ -254,6 +258,24 @@
     </div>
 
     <script>
+      const menuToggle = document.querySelector(".menu-toggle");
+      const mainNavigation = document.querySelector("#main-navigation");
+
+      menuToggle.addEventListener("click", () => {
+        const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+        menuToggle.setAttribute("aria-expanded", String(!isOpen));
+        menuToggle.setAttribute("aria-label", isOpen ? "Open menu" : "Close menu");
+        mainNavigation.classList.toggle("is-open", !isOpen);
+      });
+
+      mainNavigation.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          menuToggle.setAttribute("aria-expanded", "false");
+          menuToggle.setAttribute("aria-label", "Open menu");
+          mainNavigation.classList.remove("is-open");
+        });
+      });
+
       const dialog = document.querySelector(".gallery-dialog");
       const dialogImage = dialog.querySelector("img");
       const dialogTitle = dialog.querySelector("p");
